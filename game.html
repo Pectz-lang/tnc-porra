@@ -46,7 +46,6 @@
         document.addEventListener('keydown', function(e) {
             teclas[e.keyCode] = true
             //alert(e.keyCode)
-			//teste
         }, false)
 
         document.addEventListener('keyup', function(e) {
@@ -67,11 +66,11 @@
 
         function colidirparede() {
             if (jorge.x < parede.x + parede.largura && jorge.x + jorge.largura > parede.x && jorge.y < parede.y + parede.altura && jorge.y + jorge.altura > parede.y) {
-                jorge.speed = 0
-               
-            }
-        }
+                //jorge.speed = 0
+                jorge.y -= jorge.speed
 
+        }
+    }
         function desenha() {
 
             ctx.clearRect(0,0, canvas.width, canvas.height)
