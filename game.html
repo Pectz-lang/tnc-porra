@@ -23,6 +23,7 @@
         var ctx = canvas.getContext("2d")   // Jorge
         var ctx2 = canvas.getContext("2d")  // Parede cima
         var ctx22 = canvas.getContext("2d") // Parede baixo
+        var ctx55 = canvas.getContext("2d") // Parede teste
 
         var teclas = {}
 
@@ -87,11 +88,21 @@
         //    } 
         //}
 
+        function criarparede(parx, pary, parl, paral){
+
+           ctx55.fillStyle = "green"
+           ctx55.fillRect(parx, pary, parl, paral)
+
+           }
+
+
         function desenha() {
 
             ctx.clearRect(0,0, canvas.width, canvas.height)
             movejorge();
             colidirparede();
+            criarparede(13, 13, 161, 161)//parede criada para testes (x, y, largura, altura)
+
             
                 // Jorge
             ctx.fillStyle = "rgb(0, 174, 255)"
