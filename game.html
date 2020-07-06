@@ -27,7 +27,7 @@
 
         var teclas = {}
 
-        var jorge = {               // Player (dados)
+        var jorge = {                // Player (dados)
             x: 560,
             y: 560,
             altura: 30,
@@ -53,15 +53,7 @@
             largura: 350,
             speed: 0,
         }
-
-        var red = {
-            x: 270,
-            y: 20,
-            altura: 30,
-            largura: 30,
-            speed: 0,
-        }
-
+        
         document.addEventListener('keydown', function(e) {
             teclas[e.keyCode] = true
             //alert(e.keyCode)
@@ -92,25 +84,18 @@
             }
         }
 
-        //function criar(redx, redy, redla, redal) {     // Função criada para fazer paredes (x, y, largura, altura)
+        //function criar(redx, redy, redla, redal) {        // Função criada para fazer paredes (x, y, largura, altura)
         //    ctx55.fillStyle = "red"
         //    ctx55.fillRect(redx, redy, redla, redal)
         //}
 
-        //function colidirred() {
-        //    if (jorge.x < red.x + red.largura && jorge.x + jorge.largura > red.x && jorge.y < red.y + red.altura && jorge.y + jorge.altura > red.y) {
-        //        jorge.speed = 0
-        //    } 
-        //}
-
-        function desenha() {                                // Função para renderizar tudo e desenhar
+        function desenha() {                                 // Função para renderizar tudo e desenhar
 
             ctx.clearRect(0,0, canvas.width, canvas.height)
             movejorge();
             colidirparede();
             //criar(0, 0, 0, 0)
-            //colidirred();
-            
+
                 // Jorge
             ctx.fillStyle = "rgb(0, 174, 255)"
             ctx.fillRect(jorge.x, jorge.y, jorge.largura, jorge.altura)
@@ -123,9 +108,6 @@
             ctx2b.fillStyle = "rgb(66, 70, 64)"
             ctx2b.fillRect(parede2.x, parede2.y, parede2.largura, parede2.altura)
 
-                // Red
-            ctx55.fillStyle = "red"
-            ctx55.fillRect(red.x, red.y, red.largura, red.altura)
         }
 
         setInterval(desenha, 5)         // Intervalo que atualiza
