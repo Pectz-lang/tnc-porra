@@ -39,20 +39,12 @@
         };
         
         var parede = {              // Parede para colisão (dados)
-            x: 205,
-            y: 255,
-            altura: 15,
-            largura: 450,
+            x: 140,
+            y: 400,
+            altura: 8,
+            largura: 460,
             speed: 0,
         }
-
-      //  var parede2 = {             // Clone da parede (dados)
-       //     x: 205,
-         //   y: 249,
-       //     altura: 15,
-         //   largura: 450,
-           // speed: 0,
-       // }
 
         document.addEventListener('keydown', function(e) {
             teclas[e.keyCode] = true
@@ -76,26 +68,30 @@
             }
         }
 
-        function colidirparede(parx, pary, parla, paral) {                          // Função para Jorge colidir nas paredes principais
-            if (jorge.x < parede.x + parede.largura && jorge.x + jorge.largura > parede.x && jorge.y < parede.y + parede.altura && jorge.y + jorge.altura > parede.y) {
+        function colidirparede() {                          // Função para Jorge colidir nas paredes principais
+            if (jorge.x < parede.x + parede.largura && jorge.x + jorge.largura > parede.x && jorge.y < parede.y + parede.altura && jorge.y + jorge.altura > parede.y) {   // Parede A
               jorge.y += jorge.speed
-            } else if (jorge.x < parx + parla && jorge.x + jorge.largura > parx && jorge.y < pary + paral && jorge.y + jorge.altura > pary) {
+            } 
+        }
+
+        function colidirparedeB(parx, pary, parla, paral) { // Função para Jorge colidir nas paredes "canufladas" B
+            if (jorge.x < parx + parla && jorge.x + jorge.largura > parx && jorge.y < pary + paral && jorge.y + jorge.altura > pary) {   // Parede B
               jorge.y -= jorge.speed
             }
         }
 
-        function criar(redx, redy, redla, redal) {        // Função criada para fazer paredes (x, y, largura, altura)
-           ctx55.fillStyle = "brown"
-            ctx55.fillRect(redx, redy, redla, redal)
-            colidirparede(redx, redy, redla, redal);
+        function criarparedeB(crpx, crpy, crpla, crpal) {        // Função criada para fazer paredesB (x, y, largura, altura)
+           ctx55.fillStyle = "rgb(66, 70, 64)"
+            ctx55.fillRect(crpx, crpy, crpla, crpal)
+            colidirparedeB(crpx, crpy, crpla, crpal);
         }
 
         function desenha() {                                 // Função para renderizar tudo e desenhar
-
             ctx.clearRect(0,0, canvas.width, canvas.height)
             movejorge();
-           // colidirparede();
-           criar(205, 249, 450, 15)
+            colidirparede();
+            criarparedeB(140, 394, 460, 7);
+
                 // Jorge
             ctx.fillStyle = "rgb(0, 174, 255)"
             ctx.fillRect(jorge.x, jorge.y, jorge.largura, jorge.altura)
@@ -103,10 +99,6 @@
                 // Parede cima
             ctx2.fillStyle = "rgb(66, 70, 64)"
             ctx2.fillRect(parede.x, parede.y, parede.largura, parede.altura)
-
-                // Parede baixo
-            //ctx2b.fillStyle = "rgb(66, 70, 64)"
-            //ctx2b.fillRect(parede2.x, parede2.y, parede2.largura, parede2.altura)
         }
 
         setInterval(desenha, 5)         // Intervalo que atualiza
