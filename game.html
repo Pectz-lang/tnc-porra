@@ -38,13 +38,13 @@
             speed: 3,
         };
         
-        var parede = {              // Parede para colisão (dados)
-            x: 140,
-            y: 400,
-            altura: 8,
-            largura: 460,
-            speed: 0,
-        }
+       // var parede = {              // Parede para colisão (dados)
+       //     x: 140,
+        //    y: 400,
+         //   altura: 8,
+        //    largura: 460,
+        //    speed: 0,
+        //}
 
         document.addEventListener('keydown', function(e) {
             teclas[e.keyCode] = true
@@ -68,8 +68,8 @@
             }
         }
 
-        function colidirparede() {                          // Função para Jorge colidir nas paredes principais
-            if (jorge.x < parede.x + parede.largura && jorge.x + jorge.largura > parede.x && jorge.y < parede.y + parede.altura && jorge.y + jorge.altura > parede.y) {   // Parede A
+        function colidirparede(crpax, crpay, crpala, crpaal) {                          // Função para Jorge colidir nas paredes principais
+            if (jorge.x < crpax + crpala && jorge.x + jorge.largura > crpax && jorge.y < crpay + crpaal && jorge.y + jorge.altura > crpay) {   // Parede A
               jorge.y += jorge.speed
             } 
         }
@@ -80,25 +80,35 @@
             }
         }
 
-        function criarparedeB(crpx, crpy, crpla, crpal) {        // Função criada para fazer paredesB (x, y, largura, altura)
+        function criarparede(crpax, crpay, crpala, crpaal, crpx, crpy, crpla, crpal) {        // Função criada para fazer paredesB (x, y, largura, altura)
+           //parede de cima
+           ctx2.fillStyle = "rgb(66, 70, 64)"
+            ctx2.fillRect(crpax, crpay, crpala, crpaal);
+            colidirparede(crpax, crpay, crpala, crpaal);
+
+           //parede de baixo
            ctx55.fillStyle = "rgb(66, 70, 64)"
-            ctx55.fillRect(crpx, crpy, crpla, crpal)
+            ctx55.fillRect(crpx, crpy, crpla, crpal);
             colidirparedeB(crpx, crpy, crpla, crpal);
         }
 
         function desenha() {                                 // Função para renderizar tudo e desenhar
             ctx.clearRect(0,0, canvas.width, canvas.height)
             movejorge();
-            colidirparede();
-            criarparedeB(140, 394, 460, 7);
+            //colidirparede();
+            
+            //parede a
+            criarparede(140, 400, 460, 7, 140, 394, 460, 7);
+            //parede b
+            criarparede(140, 476, 460, 7, 140, 469, 460, 7);
 
                 // Jorge
             ctx.fillStyle = "rgb(0, 174, 255)"
             ctx.fillRect(jorge.x, jorge.y, jorge.largura, jorge.altura)
 
                 // Parede cima
-            ctx2.fillStyle = "rgb(66, 70, 64)"
-            ctx2.fillRect(parede.x, parede.y, parede.largura, parede.altura)
+            //ctx2.fillStyle = "rgb(66, 70, 64)"
+           // ctx2.fillRect(parede.x, parede.y, parede.largura, parede.altura)
         }
 
         setInterval(desenha, 5)         // Intervalo que atualiza
