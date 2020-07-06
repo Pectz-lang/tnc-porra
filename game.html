@@ -9,7 +9,7 @@
             position: absolute;
             left: 50%;
             top: 50%;
-            border: 15px solid rgb(102, 255, 0);
+            border: 15px solid rgb(66, 70, 64);
             margin-top: -300px;
             margin-left: -300px;
         }
@@ -20,16 +20,16 @@
 
     <script>
         var canvas = document.getElementById("mycanvas");
-        var ctx = canvas.getContext("2d")   // Jorge
-        var ctx2 = canvas.getContext("2d")  // Parede cima
-        var ctx22 = canvas.getContext("2d") // Parede baixo
-        var ctx55 = canvas.getContext("2d") // Parede teste
+        var ctx = canvas.getContext("2d")       // Jorge
+        var ctx2 = canvas.getContext("2d")      // Parede cima
+        var ctx2b = canvas.getContext("2d")     // Parede baixo (clone)
+        var ctx55 = canvas.getContext("2d")     // Alguma coisa universal (usada na função)
 
         var teclas = {}
 
-        var jorge = {
-            x: 50,
-            y: 500,
+        var jorge = {               // Player (dados)
+            x: 560,
+            y: 560,
             altura: 30,
             largura: 30,
             dirx: -1,
@@ -38,7 +38,7 @@
             speed: 3,
         };
         
-        var parede = {
+        var parede = {              // Parede para colisão (dados)
             x: 250,
             y: 255,
             altura: 15,
@@ -46,11 +46,19 @@
             speed: 0,
         }
 
-        var parede2 = { ////////////////////////////////////////////////////
+        var parede2 = {             // Clone da parede (dados)
             x: 250,
             y: 249,
             altura: 15,
             largura: 350,
+            speed: 0,
+        }
+
+        var red = {
+            x: 270,
+            y: 20,
+            altura: 30,
+            largura: 30,
             speed: 0,
         }
 
@@ -59,11 +67,12 @@
             //alert(e.keyCode)
         }, false)
 
+
         document.addEventListener('keyup', function(e) {
             delete teclas[e.keyCode]
         }, false)
 
-        function movejorge() {
+        function movejorge() {                              // Função para mover o Jorge
             if(38 in teclas && jorge.y > 0) {
                 jorge.y -= jorge.speed 
             } else if(40 in teclas && jorge.y + jorge.altura < canvas.height) {
@@ -75,49 +84,51 @@
             }
         }
 
-        function colidirparede() {
+        function colidirparede() {                          // Função para Jorge colidir nas paredes principais
             if (jorge.x < parede.x + parede.largura && jorge.x + jorge.largura > parede.x && jorge.y < parede.y + parede.altura && jorge.y + jorge.altura > parede.y) {
               jorge.y += jorge.speed
             } else if (jorge.x < parede2.x + parede2.largura && jorge.x + jorge.largura > parede2.x && jorge.y < parede2.y + parede2.altura && jorge.y + jorge.altura > parede2.y) {
-              jorge.y -= jorge.speed////////////////////////////////////////////////////
-        }   }
+              jorge.y -= jorge.speed
+            }
+        }
 
-        //function colidirparede() {
-        //    if (jorge.y + jorge.largura < 300) {  
-        //        jorge.y += jorge.speed
+        //function criar(redx, redy, redla, redal) {     // Função criada para fazer paredes (x, y, largura, altura)
+        //    ctx55.fillStyle = "red"
+        //    ctx55.fillRect(redx, redy, redla, redal)
+        //}
+
+        //function colidirred() {
+        //    if (jorge.x < red.x + red.largura && jorge.x + jorge.largura > red.x && jorge.y < red.y + red.altura && jorge.y + jorge.altura > red.y) {
+        //        jorge.speed = 0
         //    } 
         //}
 
-        function criarparede(parx, pary, parl, paral){
-
-           ctx55.fillStyle = "green"
-           ctx55.fillRect(parx, pary, parl, paral)
-
-           }
-
-
-        function desenha() {
+        function desenha() {                                // Função para renderizar tudo e desenhar
 
             ctx.clearRect(0,0, canvas.width, canvas.height)
             movejorge();
             colidirparede();
-            criarparede(13, 13, 161, 161)//parede criada para testes (x, y, largura, altura)
-
+            //criar(0, 0, 0, 0)
+            //colidirred();
             
                 // Jorge
             ctx.fillStyle = "rgb(0, 174, 255)"
             ctx.fillRect(jorge.x, jorge.y, jorge.largura, jorge.altura)
+
                 // Parede cima
-
-            ctx2.fillStyle = "green"
+            ctx2.fillStyle = "rgb(66, 70, 64)"
             ctx2.fillRect(parede.x, parede.y, parede.largura, parede.altura)
-                // Parede baixo
 
-            ctx22.fillStyle = "green"
-            ctx22.fillRect(parede2.x, parede2.y, parede2.largura, parede2.altura)
+                // Parede baixo
+            ctx2b.fillStyle = "rgb(66, 70, 64)"
+            ctx2b.fillRect(parede2.x, parede2.y, parede2.largura, parede2.altura)
+
+                // Red
+            ctx55.fillStyle = "red"
+            ctx55.fillRect(red.x, red.y, red.largura, red.altura)
         }
 
-        setInterval(desenha, 5)
+        setInterval(desenha, 5)         // Intervalo que atualiza
     </script>
 </body>
 </html>
