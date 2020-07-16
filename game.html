@@ -24,6 +24,7 @@
         var ctx = canvas.getContext("2d")       // Jorge
         var ctx1 = canvas.getContext("2d")      // Paredes
         var ctx2 = canvas.getContext("2d")      // Inimigo
+        var cima = true;
 
         var teclas = {}             // Aqui fica guardado as teclas
         document.addEventListener('keydown', function(e) {
@@ -170,6 +171,29 @@
 
             }
         }
+        function moverRed(){
+           
+
+           if(red.y == 321){
+               cima = true;
+               console.log(`cima ${cima}`)
+
+           }
+           if(red.y == 265){
+         
+               cima = false;
+               console.log(`cima ${cima}`)
+               
+           }
+
+           if(cima == true) {
+                red.y -= 1;
+           }
+           if (cima == false){
+                red.y += 1;
+          }
+
+        }
 
         function desenha() {        // Função para renderizar tudo e desenhar
             ctx.clearRect(0,0, canvas.width, canvas.height)
@@ -187,6 +211,7 @@
             ctx2.fillStyle = "red"
             ctx2.fillRect(red.x, red.y, red.lar, red.alt)
             red.colidirjorge()
+            moverRed();
         }
 
         setInterval(desenha, 5)     // Intervalo que atualiza
