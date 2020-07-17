@@ -23,7 +23,7 @@
         var canvas = document.getElementById("mycanvas");
         var ctx = canvas.getContext("2d")       // Jorge
         var ctx1 = canvas.getContext("2d")      // Paredes
-        var ctx2 = canvas.getContext("2d")      // Inimigo
+        var ctx2 = canvas.getContext("2d")      // Paredes que movem
         var cima = true;
 
         var teclas = {}             // Aqui fica guardado as teclas
@@ -36,7 +36,7 @@
             delete teclas[e.keyCode]
         }, false)
 
-        var jorge = {               // Jorge (dados)
+        var jorge = {         // Jorge (dados)
             x: 900,
             y: 300,
             alt: 30,
@@ -47,7 +47,7 @@
             ctx.fillStyle = "rgb(0, 174, 255)"
             ctx.fillRect(jorge.x, jorge.y, jorge.lar, jorge.alt)
             },
-            
+
             mover() {               // Mover
                 if(87 in teclas && jorge.y > 0) {
                     jorge.y -= jorge.speed 
@@ -58,23 +58,40 @@
                 } else if(68 in teclas && jorge.x + jorge.lar < canvas.width) {
                     jorge.x += jorge.speed 
                 }
-            }
-        }
+            },
 
-        var red = {
-            x: 600,
-            y: 321,
-            lar: 15,
-            alt: 80,
-
-            colidirjorge() {
+            morrer() {
                 if (red.x < jorge.x + jorge.lar &&
                 red.x + red.lar > jorge.x &&
                 red.y < jorge.y + jorge.alt &&
                 red.y + red.alt > jorge.y) {
-                    alert('VC PERDEU!!!!')
+                    return alert('VC PERDEU!!!!')
                 }
             }
+        }
+
+        var red = {           // Parede inimiga que move
+            x: 600,
+            y: 321,
+            lar: 15,
+            alt: 82,
+
+            mover() {
+                if(red.y == 321){
+                    cima = true;
+                } if (red.y == 265){
+                    cima = false;
+                } if (cima == true) {
+                    red.y -= 1;
+                } if (cima == false){
+                    red.y += 1;
+                }
+            },
+
+            desenhar() {
+                ctx2.fillStyle = "red"
+                ctx2.fillRect(red.x, red.y, red.lar, red.alt)
+            },
         }
 
         var p = {             // Paredes com colisão em cima (dados)
@@ -171,47 +188,23 @@
 
             }
         }
-        function moverRed(){
-           
-
-           if(red.y == 321){
-               cima = true;
-               console.log(`cima ${cima}`)
-
-           }
-           if(red.y == 265){
-         
-               cima = false;
-               console.log(`cima ${cima}`)
-               
-           }
-
-           if(cima == true) {
-                red.y -= 1;
-           }
-           if (cima == false){
-                red.y += 1;
-          }
-
-        }
 
         function desenha() {        // Função para renderizar tudo e desenhar
             ctx.clearRect(0,0, canvas.width, canvas.height)
-
             // Jorge
             jorge.desenho()
             jorge.mover()
+            jorge.morrer()
+            
+            // Parede que move
+            red.mover()
+            red.desenhar()
 
             // Paredes
             p.desenhar()        // Parede (cima)
             p2.desenhar()       // Parede (embaixo)
             p3.desenhar()       // Parede (direita))
             //p4.desenhar()       // Parede (esquerda)
-
-            ctx2.fillStyle = "red"
-            ctx2.fillRect(red.x, red.y, red.lar, red.alt)
-            red.colidirjorge()
-            moverRed();
         }
 
         setInterval(desenha, 5)     // Intervalo que atualiza
